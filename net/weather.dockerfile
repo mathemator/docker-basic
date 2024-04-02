@@ -10,7 +10,7 @@ RUN dotnet build WebApplication_DIT_Docker.sln
 # Stage 2: запуск .NET приложения
 FROM mcr.microsoft.com/dotnet/sdk:6.0-jammy AS runtime
 WORKDIR /app-runtime
-EXPOSE 5000
+EXPOSE 80
 COPY --from=build /app-build/WebApplication_DIT_Docker/bin/Debug/net6.0/* /app-runtime/
 
 # Запускаем ваше .NET приложение
