@@ -1,0 +1,40 @@
+#docker stack deploy -c docker-stack.yml my-weather - пример команды запуска роя
+version: "3.9"
+services:
+  nginx:
+    image: nginx:1.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    ports:
+      - 80:80
+    depends_on:
+      - weather
+    configs:
+      - source: nginx.conf
+        target: /etc/nginx/sites-available/nginx.conf
+
+  weather:
+    image: weather:1.0
+    deploy:
+#      попробуем ради интереса запустить 2 инстанса, проверим что рой сам разрулит наши запросы
+      replicas: 2
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 3s
+      restart_policy:
+        condition: on-failure
+        delay: 3s
+        max_attempts: 3
+
+configs:
+  nginx.conf:
+    file: nginx.conf
