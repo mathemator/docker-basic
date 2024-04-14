@@ -1,13 +1,24 @@
-version: '3'
+version: '3.1'
 services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: nginx.dockerfile
+    image: nginx:1.0
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/sites-available/nginx.conf
+    depends_on:
+      - weather
+
   weather:
+    container_name: weather
+    image: weather:1.0
     build: 
       context: ./
       dockerfile: weather.dockerfile
-    image: weather:1.0
-    container_name: weather
-    ports:
-      - 5000:80
     deploy:
       resources:
         limits:
