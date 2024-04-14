@@ -3,7 +3,6 @@ FROM ubuntu:focal-20230412
 EXPOSE 80
 
 COPY nginx.conf /etc/nginx/sites-available/
-
 RUN set -eux \
     && apt update \
     && apt -y install nginx=1.18.0-0ubuntu1.4 \
