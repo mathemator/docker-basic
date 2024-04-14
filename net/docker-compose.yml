@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       dockerfile: nginx.dockerfile
-    image: nginx:1.0
+    image: nginx:1.18.0u1.4
     container_name: nginx
     ports:
       - 80:80
